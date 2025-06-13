@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "raj-remote-state-dev"
+    bucket         = "raj22-remote-state-dev"
     key            = "expensevpc"
     region         = "us-east-1"
     dynamodb_table = "raj-locking-dev"
