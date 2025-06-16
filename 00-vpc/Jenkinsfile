@@ -12,12 +12,12 @@ pipeline {
     options{
         timeout( time: 30, unit: 'MINUTES')
         disableConcurrentBuilds()
-        
+        ansiColor('xterm')
     }
     stages {
         stage('INIT and PLAN') { 
             steps {
-                withAWS(credentials: 'aws-cred', region: 'us-east-1') {
+                withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
               sh  """
                  cd 00-vpc
                  terraform init -reconfigure
@@ -35,7 +35,7 @@ pipeline {
                 ok "Yes, we should."
             }
             steps {
-                withAWS(credentials: 'aws-cred', region: 'us-east-1') {
+                withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
               sh  """
                  cd 00-vpc
                  if [ ${params.ACTION} == 'apply']
