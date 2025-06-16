@@ -1,5 +1,5 @@
 module "mysql_sg" {
-  source                = ""git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main""
+  source                = "git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
@@ -11,7 +11,7 @@ module "mysql_sg" {
 }
 
 module "node_sg" {
-  source                = ""git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main""
+  source                = "git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
@@ -23,7 +23,7 @@ module "node_sg" {
 }
 
 module "control_plane_sg" {
-  source                = ""git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main""
+  source                = "git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
@@ -35,7 +35,7 @@ module "control_plane_sg" {
 }
 
 module "ingress_alb_sg" {
-  source                = ""git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main""
+  source                = "git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
@@ -52,7 +52,7 @@ module "ingress_alb_sg" {
 
 
 module "bastion_sg" {
-  source                = ""git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main""
+  source                = "git::https://github.com/daws-81s/terraform-aws-vpc.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
