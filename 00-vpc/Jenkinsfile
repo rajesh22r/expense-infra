@@ -43,8 +43,7 @@ pipeline {
                    terraform destroy -auto-approve
                  fi
         
-                 
-                  """
+            """
               
             }
         }
@@ -58,13 +57,14 @@ pipeline {
     
             }
         }
+        
+        
         }
         
          
          
         
     
-    }
         post { 
         always { 
             deleteDir()

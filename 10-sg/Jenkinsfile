@@ -19,7 +19,7 @@ pipeline {
             steps {
                 withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
               sh  """
-                 cd 10-sg
+                 cd 00-vpc
                  terraform init -reconfigure
                  terraform plan -out=tfplan
                  
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
               sh  """
-                 cd 10-sg
+                 cd 00-vpc
                  if [ ${params.ACTION} == 'apply']
                  then
                    terraform apply -auto-approve tfplan
@@ -43,18 +43,21 @@ pipeline {
                    terraform destroy -auto-approve
                  fi
         
-                 
-                  """
+            """
               
             }
         }
+        }
+
+        
+        
+        
         }
         
          
          
         
     
-    }
         post { 
         always { 
             deleteDir()
