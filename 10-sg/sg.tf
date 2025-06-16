@@ -35,7 +35,7 @@ module "control_plane_sg" {
 }
 
 module "ingress_alb_sg" {
-  source                = "https://github.com/daws-81s/terraform-aws-security-group.git?ref=main"
+  source                = "git::https://github.com/daws-81s/terraform-aws-security-group.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
@@ -52,7 +52,7 @@ module "ingress_alb_sg" {
 
 
 module "bastion_sg" {
-  source                = "https://github.com/rajesh22r/terraform-aws-security-group.git?ref=main"
+  source                = "git::https://github.com/rajesh22r/terraform-aws-security-group.git?ref=main"
   project_name          = var.project_name
   
   environment           = var.environment
