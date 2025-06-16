@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('INIT and PLAN') { 
             steps {
-                withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
+                withAWS(credentials: 'aws-cred', region: 'us-east-1') {
                     sh  """
                         cd 00-vpc
                         terraform init -reconfigure
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Apply or Destroy') { 
             steps {
-                withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
+                withAWS(credentials: 'aws-cred', region: 'us-east-1') {
                     sh  """
                         cd 00-vpc
                         
