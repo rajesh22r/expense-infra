@@ -41,41 +41,9 @@ pipeline {
             }
         }
 
-         stage('Destroy VPC') {
-            when{
-                expression { params.ACTION == 'destroy' }
-            }
-            steps {
-                build job: '00-vpc', wait: false, parameters: [
-                    string(name: 'ACTION', value: "destroy")
-                ]
-            }
+         
+        
         }
-
-        stage('Parallel Execution') {
-             when{
-                expression { params.ACTION == 'apply' }
-            }
-            parallel {
-                stage('Bastion') {
-                    steps {
-                        build job: '20-bastion', wait: false, parameters: [
-                    string(name: 'ACTION', value: "apply")
-                ]
-                        
-                    }
-                }
-                stage('EKS') {
-                    steps {
-                        build job: '40-eks', wait: false, parameters: [
-                    string(name: 'ACTION', value: "apply")
-                ]
-                    }
-                }
-    }
-        }
-
-    }
 
     post {
         always {
