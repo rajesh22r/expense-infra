@@ -30,10 +30,7 @@ pipeline {
         }
 
         stage('Apply or Destroy') { 
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
+            
             steps {
                 withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
               sh  """
@@ -57,7 +54,8 @@ pipeline {
             steps{
                 steps {
                   build job: '10-vpc', wait: false, parameters: [
-                     string(name: 'ACTION', value: 'apply') ]
+                     string(name: 'ACTION', value: 'apply')
+                      ]
     
             }
         }
