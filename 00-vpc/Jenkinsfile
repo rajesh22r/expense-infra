@@ -1,81 +1,66 @@
 pipeline {
     agent {
         label 'AGENT-1'
-    
     }
-    parameters {
-        
-        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
 
-        
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
     }
-    options{
-        timeout( time: 30, unit: 'MINUTES')
+
+    options {
+        timeout(time: 30, unit: 'MINUTES')
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
+
     stages {
         stage('INIT and PLAN') { 
             steps {
                 withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
-              sh  """
-                 cd 00-vpc
-                 terraform init -reconfigure
-                 terraform plan -out=tfplan
-                 
-                  """
-              
+                    sh  """
+                        cd 00-vpc
+                        terraform init -reconfigure
+                        terraform plan -out=tfplan
+                    """
+                }
             }
-        }
         }
 
         stage('Apply or Destroy') { 
-            
             steps {
                 withAWS(credentials: 'aws-cfred', region: 'us-east-1') {
-              sh  """
-                 cd 00-vpc
-                 if [ ${params.ACTION} == 'apply']
-                 then
-                   terraform apply -auto-approve tfplan
-                 elif [${params.ACTION} == 'destroy']
-                 then 
-                   terraform destroy -auto-approve
-                 fi
-        
-            """
-              
+                    sh  """
+                        cd 00-vpc
+                        
+                        if [ "${params.ACTION}" = "apply" ]; then
+                            terraform apply -auto-approve tfplan
+                        elif [ "${params.ACTION}" = "destroy" ]; then
+                            terraform destroy -auto-approve
+                        fi
+                    """
+                       
+                }
             }
-        }
         }
 
-        stage('Trigger SG'){
-             steps {
-                  build job: '10-vpc', wait: false, parameters: [
-                     string(name: 'ACTION', value: 'apply')
-                      ]
-    
+        stage('Trigger SG') {
+            steps {
+                build job: '10-sg', wait: false, parameters: [
+                    string(name: 'ACTION', value: "${params.ACTION}")
+                ]
             }
-        }
-        
-        
-        }
-        
-         
-         
-        
-    
-        post { 
-        always { 
-            deleteDir()
-        }
-        success{
-             
-             echo 'this section runs when pipeline success'
-         }
-        failure{
-             echo 'this section runs when pipeline failure'
         }
     }
 
+    post { 
+        always {
+            deleteDir()
+        }
+        success {
+            echo 'this section runs when pipeline success'
+        }
+        failure {
+            echo 'this section runs when pipeline failure'
+        }
+    }
 }
