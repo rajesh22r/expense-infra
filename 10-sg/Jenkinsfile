@@ -52,15 +52,6 @@ pipeline {
             }
         }
         }
-
-        stage('Trigger SG'){
-            steps{
-                steps {
-                  build job: '10-vpc', wait: false, parameters: [
-                     string(name: 'ACTION', value: 'apply') ]
-    
-            }
-        }
         
          
          
