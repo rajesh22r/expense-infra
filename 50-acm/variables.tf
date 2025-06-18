@@ -13,7 +13,7 @@ variable "zone_name" {
 }
 
 variable "zone_id" {
-  default = "Z10066791KNE051XOLV0F"
+  default = "Z03194511OQOLMFG3BETC"
 
 }
 
