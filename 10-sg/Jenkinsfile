@@ -52,7 +52,7 @@ pipeline {
             }
         }
 
-        stage('Parallel Execution') {
+        stage('Parallel-1') {
              when{
                 expression { params.ACTION == 'apply' }
             }
@@ -72,6 +72,46 @@ pipeline {
                 ]
                     }
                 }
+                stage('ECR') {
+                    steps {
+                        build job: '70-acr', wait: false, parameters: [
+                    string(name: 'ACTION', value: "apply")
+                ]
+                    }
+                }
+                
+    }
+        }
+
+
+        stage('Parallel-2') {
+             when{
+                expression { params.ACTION == 'apply' }
+            }
+            parallel {
+                stage('ACM') {
+                    steps {
+                        build job: '50-acm', wait: true, parameters: [
+                    string(name: 'ACTION', value: "apply")
+                ]
+                        
+                    }
+                }
+                stage('ALB') {
+                    steps {
+                        build job: '60-alb', wait: false, parameters: [
+                    string(name: 'ACTION', value: "apply")
+                ]
+                    }
+                }
+                stage('CDN') {
+                    steps {
+                        build job: '80-cdn', wait: false, parameters: [
+                    string(name: 'ACTION', value: "apply")
+                ]
+                    }
+                }
+                
     }
         }
 
