@@ -13,7 +13,7 @@ resource "aws_cloudfront_distribution" "expense" {
 
   enabled             = true
 
-  aliases = ["${var.project_name}-cdn.${var.zone_name}"]
+  aliases = ["${var.project_name}-cdn-new.${var.zone_name}"]
 
   # dynamic content, evaluated at last no cache
   default_cache_behavior {
